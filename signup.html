@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Mandap.com</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Sign Up Page Specific Styles */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1736777233586-7a83aee8c191?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDZ8fHxlbnwwfHx8fHw%3D') no-repeat center center/cover;
+        }
+        
+        .auth-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .auth-header h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .auth-form .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .auth-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .auth-form input, .auth-form select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .auth-form input:focus, .auth-form select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .auth-form .btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .auth-footer a {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .terms {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .terms input {
+            width: auto;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        .terms label {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        .terms a {
+            color: var(--primary-color);
+        }
+        
+        .terms a:hover {
+            text-decoration: underline;
+        }
+        
+        @media screen and (max-width: 576px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Mandap<span>.com</span></h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="vendors.html">Vendors</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="login.php" class="btn btn-outline">Login</a>
+                    <a href="signup.html" class="btn btn-primary active">Sign Up</a>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Sign Up Section -->
+     <!-- Sign Up Section -->
+<section class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Create an Account</h2>
+            <p>Join Mandap.com to plan your perfect wedding</p>
+        </div>
+        <form class="auth-form" id="signup-form" method="POST" action="signup.php">
+
+            <div class="form-group">
+
+                
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="role">I am a</label>
+                <select id="role" name="role" required>
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="user">User (Planning a Wedding)</option>
+                    <option value="vendor">Vendor (Offering Services)</option>
+                </select>
+            </div>
+            <div class="terms">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Account</button>
+
+            <!-- // one error is there -->
+            <!-- <input type="hidden" name="package" value="<?php echo $package; ?>">
+ 
+    
+        <input type="hidden" name="returnUrl" value="<?php echo $returnUrl; ?>"> -->
+  
+    
+
+        </form>
+        <div class="auth-footer">
+            <p>Already have an account? <a href="login.php">Login</a></p>
+        </div>
+    </div>
+</section>
+
+<script>
+// Function to get URL parameters
+function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+// Function to handle redirect after successful signup
+function handleSignupRedirect() {
+    const packageType = getUrlParameter('package');
+    const returnUrl = getUrlParameter('returnUrl');
+    
+    if (packageType && returnUrl) {
+        // User came from package booking, redirect back with success flag
+        const redirectUrl = `${decodeURIComponent(returnUrl)}?package=${packageType}&loginSuccess=true`;
+        window.location.href = redirectUrl;
+        return true;
+    } else if (returnUrl) {
+        // General return URL
+        window.location.href = decodeURIComponent(returnUrl);
+        return true;
+    }
+    return false; // No special redirect needed
+}
+
+// Show package info if coming from booking
+document.addEventListener('DOMContentLoaded', function() {
+    const packageType = getUrlParameter('package');
+    
+    if (packageType) {
+        // Create or update a message div to show booking intent
+        let messageDiv = document.getElementById('booking-message');
+        if (!messageDiv) {
+            messageDiv = document.createElement('div');
+            messageDiv.id = 'booking-message';
+            messageDiv.style.cssText = `
+                background: #e8f5e8;
+                color: #2e7d32;
+                padding: 15px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                border: 1px solid #c8e6c9;
+                text-align: center;
+            `;
+            
+            // Insert before the form
+            const form = document.getElementById('signup-form');
+            form.parentNode.insertBefore(messageDiv, form);
+        }
+        
+        messageDiv.innerHTML = `
+            <strong>📦 Booking Intent Detected</strong><br>
+            You're about to book the <strong>${packageType.charAt(0).toUpperCase() + packageType.slice(1)} Package</strong>.<br>
+            Create an account to continue with your booking.
+        `;
+    }
+    
+    // Add login link with package info if coming from booking
+    const packageType2 = getUrlParameter('package');
+    const returnUrl = getUrlParameter('returnUrl');
+    
+    if (packageType2 && returnUrl) {
+        // Find existing login link and update it
+        const loginLinks = document.querySelectorAll('a[href*="login"]');
+        loginLinks.forEach(link => {
+            const loginUrl = `login.php?package=${packageType2}&returnUrl=${encodeURIComponent(returnUrl)}`;
+            link.href = loginUrl;
+        });
+        
+        // Or create a new login link if needed
+        if (loginLinks.length === 0) {
+            const loginLink = document.createElement('p');
+            loginLink.style.cssText = 'text-align: center; margin-top: 15px;';
+            loginLink.innerHTML = `
+                Already have an account? 
+                <a href="login.php?package=${packageType2}&returnUrl=${encodeURIComponent(returnUrl)}" 
+                   style="color: #e91e63; text-decoration: none; font-weight: 600;">
+                   Login here
+                </a>
+            `;
+            
+            const form = document.getElementById('signup-form');
+            form.parentNode.appendChild(loginLink);
+        }
+    }
+});
+
+document.getElementById('signup-form').addEventListener('submit', function(e) {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+    const role = document.getElementById('role').value;
+    const terms = document.getElementById('terms').checked;
+
+    if (password !== confirmPassword) {
+        e.preventDefault();
+        alert('Passwords do not match');
+        return;
+    }
+
+    if (!terms) {
+        e.preventDefault();
+        alert('Please agree to the Terms of Service and Privacy Policy');
+        return;
+    }
+    
+    // If validation passes and form is submitted via AJAX, handle redirect
+    // If you're using AJAX for signup, add this in your success callback:
+    /*
+    .then(result => {
+        if (result.includes('success') || result.includes('dashboard')) {
+            if (handleSignupRedirect()) {
+                // Redirect was handled
+                return;
+            }
+            // Normal signup redirect logic here
+        }
+    })
+    */
+    
+    // If form submits normally (not AJAX), the redirect will be handled by server
+    // But you can add hidden inputs to preserve the package info:
+    const packageType = getUrlParameter('package');
+    const returnUrl = getUrlParameter('returnUrl');
+    
+    if (packageType) {
+        // Add hidden inputs to preserve package info through form submission
+        let packageInput = document.getElementById('hidden-package');
+        if (!packageInput) {
+            packageInput = document.createElement('input');
+            packageInput.type = 'hidden';
+            packageInput.name = 'package';
+            packageInput.id = 'hidden-package';
+            this.appendChild(packageInput);
+        }
+        packageInput.value = packageType;
+    }
+    
+    if (returnUrl) {
+        let returnInput = document.getElementById('hidden-return-url');
+        if (!returnInput) {
+            returnInput = document.createElement('input');
+            returnInput.type = 'hidden';
+            returnInput.name = 'returnUrl';
+            returnInput.id = 'hidden-return-url';
+            this.appendChild(returnInput);
+        }
+        returnInput.value = returnUrl;
+    }
+});
+</script>

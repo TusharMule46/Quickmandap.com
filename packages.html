@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Packages with Details Modal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .main-header {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e91e63;
+            text-decoration: none;
+        }
+
+        .logo .com {
+            color: #ff9800;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #e91e63;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .auth-btn {
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: #e91e63;
+            border: 2px solid #e91e63;
+        }
+
+        .login-btn:hover {
+            background: #e91e63;
+            color: white;
+        }
+
+        .signup-btn {
+            background: #e91e63;
+            color: white;
+            border: 2px solid #e91e63;
+        }
+
+        .signup-btn:hover {
+            background: #c2185b;
+            border-color: #c2185b;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                gap: 20px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .header-container {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Main content container adjustment */
+        .main-content {
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .package-card.popular {
+            border: 3px solid #e91e63;
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #e91e63;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transform: rotate(15deg);
+        }
+
+        .package-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .package-price {
+            font-size: 2.2rem;
+            color: #e91e63;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .package-description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .features-list {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .feature-item::before {
+            content: "✓";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .package-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: #e91e63;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #c2185b;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #e91e63;
+            border: 2px solid #e91e63;
+        }
+
+        .btn-secondary:hover {
+            background: #e91e63;
+            color: white;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #e91e63, #c2185b);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 15px 15px 0 0;
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .modal-price {
+            font-size: 2rem;
+            margin-top: 10px;
+        }
+
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 25px;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .close:hover {
+            opacity: 0.7;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .details-section {
+            margin-bottom: 30px;
+        }
+
+        .details-section h3 {
+            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e91e63;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .detail-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #e91e63;
+        }
+
+        .detail-item h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .detail-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-card::before {
+            content: "✓";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 1.2rem;
+            background: #e8f5e8;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-radius: 0 0 15px 15px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .package-buttons {
+                flex-direction: column;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 2% auto;
+                max-height: 95vh;
+            }
+
+            .details-grid,
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <a href="#" class="logo">Mandap<span class="com">.com</span></a>
+            
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="services.html">Services</a>
+                <a href="vendors.html">Vendors</a>
+                <a href="packages.html">Packages</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+ <div class="auth-buttons">
+                    <a href="login.php" class="btn btn-outline">Login</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </div>
+           
+
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+        <div class="header">
+            <h1>Choose Your Perfect Wedding Package</h1>
+            <p>Comprehensive packages designed to make your wedding planning stress-free</p>
+        </div>
+
+        <div class="packages-grid">
+            <!-- Gold Package -->
+            <div class="package-card">
+                <h3 class="package-title">Gold Package</h3>
+                <div class="package-price">₹2,50,000</div>
+                <p class="package-description">Perfect for couples looking for a beautiful wedding within a budget</p>
+                
+                <div class="features-list">
+                    <div class="feature-item">Venue Booking</div>
+                    <div class="feature-item">Basic Decor</div>
+                    <div class="feature-item">Basic Catering</div>
+                    <div class="feature-item">Basic Photography</div>
+                    <div class="feature-item">Basic Entertainment</div>
+                </div>
+
+                <div class="package-buttons">
+<button class="btn btn-primary" type="button" onclick="bookNow('gold')">BOOK NOW</button>
+                    <button class="btn btn-secondary" onclick="showDetails('gold')">VIEW DETAILS</button>
+                </div>
+            </div>
+
+            <!-- Platinum Package -->
+            <div class="package-card popular">
+                <div class="popular-badge">Most Popular</div>
+                <h3 class="package-title">Platinum Package</h3>
+                <div class="package-price">₹5,00,000</div>
+                <p class="package-description">Our most popular package with everything you need for a memorable wedding</p>
+                
+                <div class="features-list">
+                    <div class="feature-item">Premium Venue</div>
+                    <div class="feature-item">Luxury Decor</div>
+                    <div class="feature-item">Premium Catering</div>
+                    <div class="feature-item">Professional Photography</div>
+                    <div class="feature-item">Premium Entertainment</div>
+                    <div class="feature-item">Wedding Planner</div>
+                </div>
+
+                <div class="package-buttons">
+<button class="btn btn-primary" type="button" onclick="bookNow('platinum')">BOOK NOW</button>                    <button class="btn btn-secondary" onclick="showDetails('platinum')">VIEW DETAILS</button>
+                </div>
+            </div>
+
+            <!-- Royal Package -->
+            <div class="package-card">
+                <h3 class="package-title">Royal Package</h3>
+                <div class="package-price">₹10,00,000</div>
+                <p class="package-description">The ultimate wedding experience with premium services and exclusive amenities</p>
+                
+                <div class="features-list">
+                    <div class="feature-item">Luxury Venue</div>
+                    <div class="feature-item">Premium Decor</div>
+                    <div class="feature-item">Celebrity Chef Catering</div>
+                    <div class="feature-item">Celebrity Photographer</div>
+                    <div class="feature-item">Premium Entertainment</div>
+                    <div class="feature-item">Personal Wedding Planner</div>
+                    <div class="feature-item">VIP Services</div>
+                    <div class="feature-item">Live Music and Entertainment</div>
+                </div>
+
+                <div class="package-buttons">
+                    <button class="btn btn-primary" onclick="bookNow('royal')">BOOK NOW</button>
+                    <button class="btn btn-secondary" onclick="showDetails('royal')">VIEW DETAILS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="packageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 class="modal-title" id="modalTitle">Package Details</h2>
+                <div class="modal-price" id="modalPrice">₹0</div>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be dynamically loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="bookFromModal()">BOOK NOW</button>
+                <button class="btn btn-secondary" onclick="closeModal()">CLOSE</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPackage = '';
+  src="script.js"
+        const packageDetails = {
+            gold: {
+                title: "Gold Package",
+                price: "₹2,50,000",
+                description: "Perfect for couples looking for a beautiful wedding within a budget",
+                details: [
+                    {
+                        category: "Venue & Capacity",
+                        items: [
+                            { title: "Venue Booking", description: "For up to 100 guests (ceremony and reception)" },
+                            { title: "Basic Venue Decoration", description: "With flowers and drapes" }
+                        ]
+                    },
+                    {
+                        category: "Photography & Videography",
+                        items: [
+                            { title: "Photography Coverage", description: "For 8 hours (1 photographer)" },
+                            { title: "Basic Printed Photos", description: "100 pieces" }
+                        ]
+                    },
+                    {
+                        category: "Catering & Menu",
+                        items: [
+                            { title: "Vegetarian Catering", description: "For 100 guests (2 starters, 4 main courses, 2 desserts)" },
+                            { title: "Basic Sound System", description: "For ceremony and reception" }
+                        ]
+                    },
+                    {
+                        category: "Entertainment & Services",
+                        items: [
+                            { title: "Wedding Day Coordination", description: "Basic coordination services" },
+                            { title: "Basic Invitation Cards", description: "100 pieces" }
+                        ]
+                    }
+                ]
+            },
+            platinum: {
+                title: "Platinum Package",
+                price: "₹5,00,000",
+                description: "Our most popular package with everything you need for a memorable wedding",
+                details: [
+                    {
+                        category: "Venue & Capacity",
+                        items: [
+                            { title: "Premium Venue Booking", description: "For up to 200 guests (ceremony and reception)" },
+                            { title: "Elegant Decoration", description: "With premium flowers, drapes, and lighting" }
+                        ]
+                    },
+                    {
+                        category: "Photography & Videography",
+                        items: [
+                            { title: "Full-day Photography", description: "Coverage (2 photographers, 1 videographer)" },
+                            { title: "Premium Printed Photos", description: "200 pieces with album" }
+                        ]
+                    },
+                    {
+                        category: "Catering & Menu",
+                        items: [
+                            { title: "Multi-cuisine Catering", description: "For 200 guests (4 starters, 6 main courses, 3 desserts)" },
+                            { title: "Bridal Makeup & Hairstyling", description: "Including trial sessions" },
+                            { title: "DJ and Entertainment", description: "For 4 hours" }
+                        ]
+                    },
+                    {
+                        category: "Additional Services",
+                        items: [
+                            { title: "Sound and Lighting System", description: "For ceremony and reception" },
+                            { title: "Wedding Planning", description: "And coordination services" },
+                            { title: "Transportation", description: "For bride and groom" }
+                        ]
+                    }
+                ]
+            },
+            royal: {
+                title: "Royal Package",
+                price: "₹10,00,000",
+                description: "The ultimate wedding experience with premium services and exclusive amenities",
+                details: [
+                    {
+                        category: "Venue & Capacity",
+                        items: [
+                            { title: "Luxury Venue Booking", description: "For up to 300 guests (ceremony and reception)" },
+                            { title: "Exquisite Decoration", description: "With premium imported flowers, custom drapes, and advanced lighting" }
+                        ]
+                    },
+                    {
+                        category: "Photography & Videography",
+                        items: [
+                            { title: "Complete Photography", description: "And cinematic videography (3 photographers, 2 videographers, drone coverage)" },
+                            { title: "Premium Photo Album", description: "500 pieces with luxury binding" }
+                        ]
+                    },
+                    {
+                        category: "Catering & Menu",
+                        items: [
+                            { title: "International Cuisine", description: "For 300 guests (6 starters, 8 main courses, 4 desserts, live counters)" },
+                            { title: "Bridal and Family Makeup", description: "Including trial sessions for bride and family" }
+                        ]
+                    },
+                    {
+                        category: "Entertainment & Premium Services",
+                        items: [
+                            { title: "Live Music and Entertainment", description: "For 6 hours with professional artists" },
+                            { title: "Designer Invitation Cards", description: "300 pieces with custom design" },
+                            { title: "Premium Sound and Lighting", description: "With special effects and professional setup" },
+                            { title: "Comprehensive Wedding Planning", description: "And coordination with dedicated team" },
+                            { title: "Luxury Transportation", description: "For bride and groom (decorated cars)" },
+                            { title: "VIP Services", description: "Including guest coordination and hospitality" },
+                            { title: "Welcome Gifts", description: "For all guests with custom packaging" }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        function showDetails(packageType) {
+            currentPackage = packageType;
+            const modal = document.getElementById('packageModal');
+            const package = packageDetails[packageType];
+            
+            document.getElementById('modalTitle').textContent = package.title;
+            document.getElementById('modalPrice').textContent = package.price;
+            
+            let modalBody = `
+                <div class="details-section">
+                    <h3>Package Overview</h3>
+                    <p style="color: #666; font-size: 1.1rem; line-height: 1.6; margin-bottom: 20px;">${package.description}</p>
+                </div>
+            `;
+            
+            package.details.forEach(section => {
+                modalBody += `
+                    <div class="details-section">
+                        <h3>${section.category}</h3>
+                        <div class="details-grid">
+                `;
+                
+                section.items.forEach(item => {
+                    modalBody += `
+                        <div class="detail-item">
+                            <h4>${item.title}</h4>
+                            <p>${item.description}</p>
+                        </div>
+                    `;
+                });
+                
+                modalBody += `</div></div>`;
+            });
+            
+            // Add included features section
+            modalBody += `
+                <div class="details-section">
+                    <h3>What's Included</h3>
+                    <div class="features-grid">
+            `;
+            
+            if (packageType === 'gold') {
+                const features = [
+                    "Venue Booking", "Basic Decor", "Basic Catering", "Basic Photography", 
+                    "Basic Entertainment", "Wedding Day Coordination", "Basic Invitation Cards", "Basic Sound System"
+                ];
+                features.forEach(feature => {
+                    modalBody += `<div class="feature-card">${feature}</div>`;
+                });
+            } else if (packageType === 'platinum') {
+                const features = [
+                    "Premium Venue", "Luxury Decor", "Premium Catering", "Professional Photography", 
+                    "Premium Entertainment", "Wedding Planner", "Bridal Makeup", "DJ Services",
+                    "Transportation", "Premium Sound System"
+                ];
+                features.forEach(feature => {
+                    modalBody += `<div class="feature-card">${feature}</div>`;
+                });
+            } else if (packageType === 'royal') {
+                const features = [
+                    "Luxury Venue", "Premium Decor", "Celebrity Chef Catering", "Celebrity Photographer", 
+                    "Premium Entertainment", "Personal Wedding Planner", "VIP Services", 
+                    "Live Music and Entertainment", "Designer Invitation Cards", "Luxury Transportation",
+                    "Welcome Gifts", "Profe5ssional Makeup Team", "Drone Coverage", "Special Effects"
+                ];
+                features.forEach(feature => {
+                    modalBody += `<div class="feature-card">${feature}</div>`;
+                });
+            }
+            
+            modalBody += `</div></div>`;
+            
+            // Add terms and conditions
+            modalBody += `
+                <div class="details-section">
+                    <h3>Terms & Conditions</h3>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #e91e63;">
+                        <ul style="color: #666; line-height: 1.6; margin-left: 20px;">
+                            <li>50% advance payment required to confirm booking</li>
+                            <li>Final guest count must be confirmed 7 days before the event</li>
+                            <li>Any additional services will be charged separately</li>
+                            <li>Cancellation policy: 30 days notice required for full refund</li>
+                            <li>Weather contingency plans available for outdoor events</li>
+                            <li>All decorations and equipment are rented for the event duration only</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('modalBody').innerHTML = modalBody;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('packageModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+         // ✅ Book from Modal with login check
+    // ✅ Updated Book from Modal with login check and redirect URL
+window.bookFromModal = function() {
+    fetch('check_login.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.loggedIn) {
+                window.location.href = `book.php?package=${currentPackage}`;
+            } else {
+                // Store current page and package info for redirect after login
+                const currentUrl = window.location.href;
+                const packageParam = encodeURIComponent(currentPackage);
+                const returnUrl = encodeURIComponent(currentUrl);
+                window.location.href = `login.php?package=${packageParam}&returnUrl=${returnUrl}`;
+            }
+        })
+        .catch(error => {
+            console.error("Error checking login status:", error);
+        });
+};
+
+// ✅ Updated Book directly from package button
+window.bookNow = function(packageName) {
+    fetch('check_login.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.loggedIn) {
+                window.location.href = `book.php?package=${packageName}`;
+            } else {
+                // Store current page and package info for redirect after login
+                const currentUrl = window.location.href;
+                const packageParam = encodeURIComponent(packageName);
+                const returnUrl = encodeURIComponent(currentUrl);
+                window.location.href = `login.php?package=${packageParam}&returnUrl=${returnUrl}`;
+            }
+        })
+        .catch(error => {
+            console.error("Error checking login status:", error);
+        });
+};
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('packageModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Mobile menu toggle function
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking on nav links
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navMenu').classList.remove('active');
+            });
+        });
+      
+
+    </script>
+</body>
+</html>

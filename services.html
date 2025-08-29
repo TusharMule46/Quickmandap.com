@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services -Mandap.com</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Services Page Specific Styles */
+        .services-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHdlZGRpbmd8ZW58MHx8MHx8fDA%3D') no-repeat center center/cover;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            margin-top: 70px;
+        }
+        
+        .services-hero h1 {
+            font-size: 3rem;
+            color: var(--white);
+        }
+        
+        .services-section {
+            padding: 80px 0;
+        }
+        
+        .service-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+        
+        .category-btn {
+            padding: 10px 20px;
+            background-color: var(--light-color);
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .service-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 80px;
+        }
+        
+        .service-item:nth-child(even) .service-content {
+            flex-direction: row-reverse;
+        }
+        
+        .service-content {
+            display: flex;
+            gap: 50px;
+            margin-bottom: 30px;
+        }
+        
+        .service-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .service-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .service-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background-color: var(--light-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .service-icon i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .service-details h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .service-details p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .price-range {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .service-features {
+            margin-bottom: 30px;
+        }
+        
+        .service-features h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-item i {
+            color: var(--success-color);
+            margin-right: 10px;
+        }
+        
+        .service-vendors {
+            background-color: var(--light-color);
+            padding: 30px;
+            border-radius: 10px;
+        }
+        
+        .service-vendors h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .vendors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .vendor-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .vendor-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .vendor-image {
+            height: 150px;
+            overflow: hidden;
+        }
+        
+        .vendor-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .vendor-info {
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .vendor-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .vendor-info .rating {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+        
+        .vendor-info .btn {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        
+        .cta-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1505944357431-27579db47558?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHdlZGRpbmclMjB2ZW51ZXxlbnwwfHwwfHx8MA%3D%3D') no-repeat center center/cover;
+            text-align: center;
+            color: var(--white);
+            padding: 80px 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        @media screen and (max-width: 992px) {
+            .service-content {
+                flex-direction: column !important;
+                gap: 30px;
+            }
+            
+            .service-image {
+                height: 400px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .services-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .service-details h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Mandap<span>.com</span></h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html" class="active">Services</a></li>
+                    <li><a href="vendors.html">Vendors</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="login.php" class="btn btn-outline">Login</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Services Hero Section -->
+    <section class="services-hero">
+        <div class="container">
+            <h1>Our Wedding Services</h1>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Comprehensive Wedding Services</h2>
+                <p>Everything you need to make your special day perfect</p>
+            </div>
+            
+            <div class="service-categories">
+                <button class="category-btn active" data-category="all">All Services</button>
+                <button class="category-btn" data-category="venues">Venues</button>
+                <button class="category-btn" data-category="catering">Catering</button>
+                <button class="category-btn" data-category="photography">Photography</button>
+                <button class="category-btn" data-category="makeup">Makeup</button>
+                <button class="category-btn" data-category="decoration">Decoration</button>
+            </div>
+            
+            <div class="services-list">
+                <!-- Venues Service -->
+                <div class="service-item" id="venues">
+                    <div class="service-content">
+                        <div class="service-image">
+ <img src="https://images.unsplash.com/photo-1740417265999-42c749fcbed3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjR8fGluZGlhbiUyMHdlZGRpbmclMjBsb2dvfGVufDB8fDB8fHww" alt="Wedding Venues">
+                        </div>
+                        <div class="service-details">
+                            <div class="service-icon">
+                                <i class="fas fa-landmark"></i>
+                            </div>
+                            <h2>Wedding Venues</h2>
+                            <p>Find the perfect venue for your wedding ceremony and reception. From traditional mandaps to modern banquet halls, we have venues to suit every style and budget.</p>
+                            <div class="price-range">
+                                Price Range: ₹50,000 - ₹5,00,000
+                            </div>
+                            <div class="service-features">
+                                <h3>Features:</h3>
+                                <div class="features-grid">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Banquet Halls</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Destination Venues</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Garden Venues</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Heritage Properties</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Hotel Venues</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Customizable Spaces</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="vendors.html?category=venues" class="btn btn-primary">Find Venues</a>
+                        </div>
+                    </div>
+                    <div class="service-vendors">
+                        <h3>Top Venue Providers</h3>
+                        <div class="vendors-grid">
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://images.unsplash.com/photo-1653940855875-95c9f53778ce?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHJveWFsJTIwcGFsYWNlc3xlbnwwfHwwfHx8MA%3D%3D" alt="Royal Palace">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Royal Palace</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://images.unsplash.com/photo-1578302758063-0ef3e048ca89?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Z2FyZGVufGVufDB8fDB8fHww" alt="Garden Paradise">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Garden Paradise</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://media.istockphoto.com/id/489348944/photo/tomb-of-isa-khan-at-humayuns-tomb-delhi-india-cngltrv1109.webp?a=1&b=1&s=612x612&w=0&k=20&c=iZG-1tOWmJekQxqoiV6RQm6OEFNKyer3XvKO2nEuHTY=" alt="Heritage Haveli">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Heritage Haveli</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Catering Service -->
+                <div class="service-item" id="catering">
+                    <div class="service-content">
+                        <div class="service-image">
+                            <img src="https://plus.unsplash.com/premium_photo-1673897888993-a1db844c2ca1?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8d2VkZGluZyUyMHRhYmxlfGVufDB8fDB8fHww" alt="Wedding Catering">
+                        </div>
+                        <div class="service-details">
+                            <div class="service-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <h2>Wedding Catering</h2>
+                            <p>Delight your guests with exquisite food from our partner caterers. Choose from a variety of cuisines and customized menus to create a memorable dining experience.</p>
+                            <div class="price-range">
+                                Price Range: ₹800 - ₹2,500 per plate
+                            </div>
+                            <div class="service-features">
+                                <h3>Features:</h3>
+                                <div class="features-grid">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Multi-cuisine Options</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Vegetarian & Non-vegetarian</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Live Counters</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Dessert Stations</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Bar Services</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Customized Menus</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="vendors.html?category=catering" class="btn btn-primary">Find Caterers</a>
+                        </div>
+                    </div>
+                    <div class="service-vendors">
+                        <h3>Top Catering Providers</h3>
+                        <div class="vendors-grid">
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://images.unsplash.com/photo-1580590562911-89d31480d993?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8U3BpY2UlMjBEZWxpZ2h0fGVufDB8fDB8fHww" alt="Spice Delight">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Spice Delight</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://plus.unsplash.com/premium_photo-1661308225568-5a055d320ea6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Um95YWwlMjBGZWFzdHxlbnwwfHwwfHx8MA%3D%3D" alt="Royal Feast">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Royal Feast</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://media.istockphoto.com/id/838927480/photo/onam-sadya-on-a-banana-leaf.webp?a=1&b=1&s=612x612&w=0&k=20&c=DifbHjpQKU2p_-53a5w5kDvL3X-RPkP5eUqrK0Fud78=" alt="Taste of India">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Taste of India</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Photography Service -->
+                <div class="service-item" id="photography">
+                    <div class="service-content">
+                        <div class="service-image">
+                            <img src="https://images.unsplash.com/photo-1587271315307-eaebc181c749?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8d2VkZGluZyUyMGluZGlhbnxlbnwwfHwwfHx8MA%3D%3D" alt="Wedding Photography">
+                        </div>
+                        <div class="service-details">
+                            <div class="service-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <h2>Wedding Photography</h2>
+                            <p>Capture every precious moment of your wedding day with our professional photographers. From pre-wedding shoots to candid photography, we offer a range of services.</p>
+                            <div class="price-range">
+                                Price Range: ₹50,000 - ₹2,00,000
+                            </div>
+                            <div class="service-features">
+                                <h3>Features:</h3>
+                                <div class="features-grid">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Pre-wedding Photoshoots</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Candid Photography</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Cinematic Videos</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Drone Shots</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Same-day Edits</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Photo Albums</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="vendors.html?category=photography" class="btn btn-primary">Find Photographers</a>
+                        </div>
+                    </div>
+                    <div class="service-vendors">
+                        <h3>Top Photography Providers</h3>
+                        <div class="vendors-grid">
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://images.unsplash.com/photo-1569810020669-aa9d38003ea7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHdlZGRpbmclMjBpbmRpYW58ZW58MHx8MHx8fDA%3D" alt="Moments Photography">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Moments Photography</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://images.unsplash.com/photo-1610173826608-bd1f53a52db1?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fHdlZGRpbmclMjBpbmRpYW58ZW58MHx8MHx8fDA%3D" alt="Pixel Perfect">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Pixel Perfect</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://images.unsplash.com/photo-1583878448938-0de973eec3b9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzl8fHdlZGRpbmclMjBpbmRpYW58ZW58MHx8MHx8fDA%3D" alt="Wedding Stories">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Wedding Stories</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Makeup Service -->
+                <div class="service-item" id="makeup">
+                    <div class="service-content">
+                        <div class="service-image">
+                            <img src="https://images.unsplash.com/photo-1610173827043-9db50e0d8ef9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aW5kaWFuJTIwd2VkZGluZ3xlbnwwfHwwfHx8MA%3D%3D" alt="Bridal Makeup">
+                        </div>
+                        <div class="service-details">
+                            <div class="service-icon">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                            <h2>Bridal Makeup</h2>
+                            <p>Look your best on your special day with our professional makeup artists. We offer bridal makeup, groom grooming, and family makeup services.</p>
+                            <div class="price-range">
+                                Price Range: ₹15,000 - ₹50,000
+                            </div>
+                            <div class="service-features">
+                                <h3>Features:</h3>
+                                <div class="features-grid">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Bridal Makeup</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Groom Grooming</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Family Makeup</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Hair Styling</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Mehendi Services</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Pre-wedding Skincare</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="vendors.html?category=makeup" class="btn btn-primary">Find Makeup Artists</a>
+                        </div>
+                    </div>
+                    <div class="service-vendors">
+                        <h3>Top Makeup Providers</h3>
+                        <div class="vendors-grid">
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://plus.unsplash.com/premium_photo-1724762184102-c61dab5edf9f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aW5kaWFuJTIwd2VkZGluZyUyMG1ha2V1cHxlbnwwfHwwfHx8MA%3D%3D" alt="Glamour Studio">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Glamour Studio</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://plus.unsplash.com/premium_photo-1682090811844-e0a89fb2c780?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW5kaWFuJTIwd2VkZGluZyUyMG1ha2V1cHxlbnwwfHwwfHx8MA%3D%3D" alt="Beauty Bliss">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Beauty Bliss</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://media.istockphoto.com/id/1174369498/photo/an-important-part-of-her-culture.webp?a=1&b=1&s=612x612&w=0&k=20&c=vu0q4-0MTGSDRL4P-ksPyG67VPhyo7A0vrUzDRP2lDU=" alt="Bridal Elegance">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Bridal Elegance</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Decoration Service -->
+                <div class="service-item" id="decoration">
+                    <div class="service-content">
+                        <div class="service-image">
+                            <img src="https://plus.unsplash.com/premium_photo-1724762182780-000d248f9301?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGluZGlhbiUyMHdlZGRpbmd8ZW58MHx8MHx8fDA%3D" alt="Wedding Decoration">
+                        </div>
+                        <div class="service-details">
+                            <div class="service-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <h2>Wedding Decoration</h2>
+                            <p>Transform your venue into a magical setting with our decoration services. From traditional to contemporary themes, our decorators can bring your vision to life.</p>
+                            <div class="price-range">
+                                Price Range: ₹1,00,000 - ₹5,00,000
+                            </div>
+                            <div class="service-features">
+                                <h3>Features:</h3>
+                                <div class="features-grid">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Mandap Decoration</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Stage Setup</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Floral Arrangements</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Lighting Design</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Theme-based Decor</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Entry & Pathway Decor</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="vendors.html?category=decoration" class="btn btn-primary">Find Decorators</a>
+                        </div>
+                    </div>
+                    <div class="service-vendors">
+                        <h3>Top Decoration Providers</h3>
+                        <div class="vendors-grid">
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://images.unsplash.com/photo-1587271407850-8d438ca9fdf2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kaWFuJTIwd2VkZGluZyUyMGRlY29yYXRpb258ZW58MHx8MHx8fDA%3D" alt="Elegant Decor">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Elegant Decor</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://images.unsplash.com/photo-1735052713313-40c183b5e4cf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGluZGlhbiUyMHdlZGRpbmclMjBkZWNvcmF0aW9ufGVufDB8fDB8fHww" alt="Dream Designs">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Dream Designs</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                            <div class="vendor-card">
+                                <div class="vendor-image">
+                                    <img src="https://plus.unsplash.com/premium_photo-1695908426418-d352a624f017?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGluZGlhbiUyMHdlZGRpbmclMjBkZWNvcmF0aW9ufGVufDB8fDB8fHww" alt="Floral Fantasy">
+                                </div>
+                                <div class="vendor-info">
+                                    <h4>Floral Fantasy</h4>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <a href="vendors.html" class="btn btn-outline">View Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Need a Custom Service Package?</h2>
+            <p>Contact us to discuss your specific requirements and we'll create a tailored package just for you.</p>
+            <a href="contact.html" class="btn btn-primary">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Mandap<span>.com</span></h2>
+                    <p>Your complete wedding planning solution</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="vendors.html">Vendors</a></li>
+                            <li><a href="packages.html">Packages</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#venues">Venues</a></li>
+                            <li><a href="#catering">Catering</a></li>
+                            <li><a href="#photography">Photography</a></li>
+                            <li><a href="#makeup">Makeup</a></li>
+                            <li><a href="#decoration">Decoration</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Contact Us</h3>
+                        <ul class="contact-info">
+                            <li><i class="fas fa-map-marker-alt"></i> 123 Wedding Street, Mumbai</li>
+                            <li><i class="fas fa-phone"></i> +91 9876543210</li>
+                            <li><i class="fas fa-envelope"></i> info@Mandap.com</li>
+                        </ul>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Mandap.com. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Service Category Filter
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const serviceItems = document.querySelectorAll('.service-item');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    // Show all services if 'all' category is selected
+                    if (category === 'all') {
+                        serviceItems.forEach(item => {
+                            item.style.display = 'block';
+                        });
+                    } else {
+                        // Show only services that match the selected category
+                        serviceItems.forEach(item => {
+                            if (item.id === category) {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        });
+                        
+                        // Scroll to the service item
+                        document.getElementById(category).scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Check if there's a hash in the URL and scroll to that section
+            if (window.location.hash) {
+                const hash = window.location.hash.substring(1);
+                const element = document.getElementById(hash);
+                
+                if (element) {
+                    setTimeout(() => {
+                        window.scrollTo({
+                            top: element.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Activate the corresponding category button
+                        categoryButtons.forEach(btn => {
+                            if (btn.getAttribute('data-category') === hash) {
+                                btn.click();
+                            }
+                        });
+                    }, 500);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

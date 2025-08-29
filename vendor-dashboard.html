@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Dashboard - Mandap.com</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-color: #d4145a;
+            --secondary-color: #fbb03b;
+            --accent-color: #9c27b0;
+            --success-color: #4caf50;
+            --error-color: #f44336;
+            --dark-color: #2c3e50;
+            --text-color: #666;
+            --light-color: #f8f9fa;
+            --white: #ffffff;
+            --border-color: #e9ecef;
+            --box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: #b91250;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--box-shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin-right: 30px;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-color);
+            margin: 3px 0;
+            transition: var(--transition);
+        }
+
+        /* Dashboard Specific Styles */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 70px;
+        }
+        
+        .dashboard-sidebar {
+            width: 250px;
+            background-color: var(--white);
+            box-shadow: var(--box-shadow);
+            padding: 20px 0;
+            position: fixed;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+        }
+        
+        .vendor-info {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        
+        .vendor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            overflow: hidden;
+            border: 3px solid var(--primary-color);
+        }
+        
+        .vendor-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .vendor-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .vendor-category {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+        
+        .sidebar-menu {
+            padding: 0 20px;
+        }
+        
+        .sidebar-menu h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 10px;
+            border-radius: 5px;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .dashboard-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 30px;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-title h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .dashboard-actions .btn {
+            padding: 8px 20px;
+        }
+        
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .card-icon.purple {
+            background-color: rgba(156, 39, 176, 0.1);
+            color: var(--accent-color);
+        }
+        
+        .card-icon.pink {
+            background-color: rgba(212, 20, 90, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .card-icon.orange {
+            background-color: rgba(251, 176, 59, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        .card-icon.green {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+        }
+        
+        .card-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .card-info p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        
+        .services-section, .bookings-section, .reviews-section {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .section-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0;
+        }
+        
+        .section-header a {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .services-table, .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .services-table th, .services-table td,
+        .bookings-table th, .bookings-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .services-table th, .bookings-table th {
+            font-weight: 600;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+        }
+        
+        .services-table tr:last-child td,
+        .bookings-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .status.active {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+        }
+        
+        .status.inactive {
+            background-color: rgba(158, 158, 158, 0.1);
+            color: #9e9e9e;
+        }
+        
+        .status.confirmed {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+        }
+        
+        .status.pending {
+            background-color: rgba(251, 176, 59, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        .status.cancelled {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--error-color);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .action-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .add-service-form {
+            display: none;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+        
+        @media screen and (max-width: 992px) {
+            .dashboard-sidebar {
+                width: 200px;
+            }
+            
+            .dashboard-content {
+                margin-left: 200px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            
+            .dashboard-sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                margin-bottom: 20px;
+            }
+            
+            .dashboard-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .vendor-info {
+                display: flex;
+                align-items: center;
+                text-align: left;
+                padding: 15px 20px;
+            }
+            
+            .vendor-avatar {
+                margin: 0 15px 0 0;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .sidebar-menu {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            
+            .sidebar-menu h3 {
+                width: 100%;
+            }
+            
+            .menu-item {
+                margin-right: 10px;
+            }
+
+            .dashboard-cards {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+            }
+
+            .services-table, .bookings-table {
+                font-size: 0.9rem;
+            }
+
+            .services-table th, .services-table td,
+            .bookings-table th, .bookings-table td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Mandap<span>.com</span></h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="vendors.html">Vendors</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="logout.php" class="btn btn-outline">Logout</a>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Dashboard -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="dashboard-sidebar">
+            <div class="vendor-info">
+                <div class="vendor-avatar">
+                    <img src="https://via.placeholder.com/150" alt="Vendor Avatar">
+                </div>
+                <div class="vendor-details">
+                    <h3 class="vendor-name">Royal Palace Banquets</h3>
+                    <p class="vendor-category">Venue Provider</p>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <h3>Main Menu</h3>
+                <a href="#" class="menu-item active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-store"></i>
+                    <span>My Services</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Bookings</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-star"></i>
+                    <span>Reviews</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-comment-alt"></i>
+                    <span>Messages</span>
+                </a>
+                <h3>Account</h3>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="index.html" class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <div class="dashboard-title">
+                    <h2>Vendor Dashboard</h2>
+                    <p>Welcome back, Royal Palace Banquets!</p>
+                </div>
+                <div class="dashboard-actions">
+                    <button id="add-service-btn" class="btn btn-primary">Add New Service</button>
+                </div>
+            </div>
+            
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <div class="card-icon purple">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>3</h3>
+                        <p>Active Services</p>
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon pink">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>8</h3>
+                        <p>Total Bookings</p>
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon orange">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>4.8</h3>
+                        <p>Average Rating</p>
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon green">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>₹3,75,000</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="add-service-form" id="add-service-form">
+                <div class="section-header">
+                    <h3>Add New Service</h3>
+                    <button id="close-form-btn" class="action-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="service-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="service-name">Service Name</label>
+                            <input type="text" id="service-name" name="service-name" placeholder="Enter service name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="service-category">Category</label>
+                            <select id="service-category" name="service-category" required>
+                                <option value="" disabled selected>Select category</option>
+                                <option value="venue">Venue</option>
+                                <option value="catering">Catering</option>
+                                <option value="photography">Photography</option>
+                                <option value="makeup">Makeup</option>
+                                <option value="decoration">Decoration</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="service-description">Description</label>
+                        <textarea id="service-description" name="service-description" placeholder="Enter service description" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="service-price">Price (₹)</label>
+                            <input type="number" id="service-price" name="service-price" placeholder="Enter price" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="service-status">Status</label>
+                            <select id="service-status" name="service-status" required>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancel-service-btn" class="btn btn-outline">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Service</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="services-section">
+                <div class="section-header">
+                    <h3>My Services</h3>
+                    <a href="#">View All</a>
+                </div>
+                <table class="services-table">
+                    <thead>
+                        <tr>
+                            <th>Service Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Bookings</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Premium Venue Package</td>
+                            <td>Venue</td>
+                            <td>₹1,50,000</td>
+                            <td>8</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn" title="Delete">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Standard Venue Package</td>
+                            <td>Venue</td>
+                            <td>₹75,000</td>
+                            <td>12</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn" title="Delete">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Budget Venue Package</td>
+                            <td>Venue</td>
+                            <td>₹50,000</td>
+                            <td>5</td>
+                            <td><span class="status inactive">Inactive</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn" title="Delete">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="bookings-section">
+                <div class="section-header">
+                    <h3>Recent Bookings</h3>
+                    <a href="#">View All</a>
+                </div>
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Service</th>
+                            <th>Client</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#BK001</td>
+                            <td>Premium Venue Package</td>
+                            <td>Priya & Rahul</td>
+                            <td>15 Dec, 2023</td>
+                            <td>₹1,50,000</td>
+                            <td><span class="status confirmed">Confirmed</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="action-btn" title="Message">
+                                        <i class="fas fa-comment"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#BK002</td>
+                            <td>Standard Venue Package</td>
+                            <td>Ananya & Vikram</td>
+                            <td>20 Dec, 2023</td>
+                            <td>₹75,000</td>
+                            <td><span class="status pending">Pending</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="action-btn" title="Message">
+                                        <i class="fas fa-comment"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for dashboard functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const addServiceBtn = document.getElementById('add-service-btn');
+            const addServiceForm = document.getElementById('add-service-form');
+            const closeFormBtn = document.getElementById('close-form-btn');
+            const cancelServiceBtn = document.getElementById('cancel-service-btn');
+            const serviceForm = document.getElementById('service-form');
+
+            // Show add service form
+            if (addServiceBtn) {
+                addServiceBtn.addEventListener('click', function() {
+                    addServiceForm.style.display = 'block';
+                    addServiceBtn.style.display = 'none';
+                });
+            }
+
+            // Hide add service form
+            function hideForm() {
+                addServiceForm.style.display = 'none';
+                addServiceBtn.style.display = 'inline-block';
+                serviceForm.reset();
+            }
+
+            if (closeFormBtn) {
+                closeFormBtn.addEventListener('click', hideForm);
+            }
+
+            if (cancelServiceBtn) {
+                cancelServiceBtn.addEventListener('click', hideForm);
+            }
+
+            // Handle form submission
+            if (serviceForm) {
+                serviceForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(serviceForm);
+                    const serviceName = formData.get('service-name');
+                    const serviceCategory = formData.get('service-category');
+                    const servicePrice = formData.get('service-price');
+                    const serviceStatus = formData.get('service-status');
+                    
+                    // Add new row to services table
+                    const servicesTable = document.querySelector('.services-table tbody');
+                    const newRow = document.createElement('tr');
+                    
+                    newRow.innerHTML = `
+                        <td>${serviceName}</td>
+                        <td>${serviceCategory.charAt(0).toUpperCase() + serviceCategory.slice(1)}</td>
+                        <td>₹${parseInt(servicePrice).toLocaleString()}</td>
+                        <td>0</td>
+                        <td><span class="status ${serviceStatus}">${serviceStatus.charAt(0).toUpperCase() + serviceStatus.slice(1)}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn" title="Delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    
+                    servicesTable.appendChild(newRow);
+                    
+                    // Update active services count
+                    if (serviceStatus === 'active') {
+                        const activeServicesCard = document.querySelector('.dashboard-card .card-info h3');
+                        const currentCount = parseInt(activeServicesCard.textContent);
+                        activeServicesCard.textContent = currentCount + 1;
+                    }
+                    
+                    // Hide form and show success message
+                    hideForm();
+                    alert('Service added successfully!');
+                });
+            }
+
+            // Handle menu item clicks
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all items
+                    menuItems.forEach(mi => mi.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                });
+            });
+
+            // Handle action buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.action-btn')) {
+                    const btn = e.target.closest('.action-btn');
+                    const title = btn.getAttribute('title');
+                    
+                    if (title === 'Delete') {
+                        if (confirm('Are you sure you want to delete this item?')) {
+                            const row = btn.closest('tr');
+                            row.remove();
+                            alert('Item deleted successfully!');
+                        }
+                    } else if (title === 'Edit') {
+                        alert('Edit functionality would be implemented here');
+                    } else if (title === 'View') {
+                        alert('View details functionality would be implemented here');
+                    } else if (title === 'Message') {
+                        alert('Message functionality would be implemented here');
+                    }
+                }
+            });
+
+            // Mobile menu toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

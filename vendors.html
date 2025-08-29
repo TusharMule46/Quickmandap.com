@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendors - Mandap.com</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Vendors Page Specific Styles */
+        .vendors-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://plus.unsplash.com/premium_photo-1682092632793-c7d75b23718e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW5kaWFuJTIwd2VkZGluZyUyMGRlY29yYXRpb258ZW58MHx8MHx8fDA%3D') no-repeat center center/cover;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            margin-top: 70px;
+        }
+        
+        .vendors-hero h1 {
+            font-size: 3rem;
+            color: var(--white);
+        }
+        
+        .vendors-section {
+            padding: 80px 0;
+        }
+        
+        .vendors-filters {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+        
+        .filter-buttons .btn {
+            padding: 10px 20px;
+        }
+        
+        .vendors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .vendor-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .vendor-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .vendor-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .vendor-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .vendor-card:hover .vendor-image img {
+            transform: scale(1.1);
+        }
+        .vendor-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.vendor-card {
+    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+        .vendor-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .vendor-details {
+            padding: 20px;
+        }
+        
+        .vendor-name {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .vendor-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .vendor-rating .stars {
+            color: var(--secondary-color);
+            margin-right: 10px;
+        }
+        
+        .vendor-rating .count {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+        
+        .vendor-location {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        
+        .vendor-location i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .vendor-description {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .vendor-price {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .vendor-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .vendor-actions .btn {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        
+        .pagination-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 5px;
+            border-radius: 5px;
+            background-color: var(--white);
+            color: var(--dark-color);
+            font-weight: 500;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .pagination-item:hover, .pagination-item.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .pagination-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-item i {
+            font-size: 0.8rem;
+        }
+        
+        .vendor-cta {
+            background-color: var(--light-color);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .vendor-cta h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .vendor-cta p {
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .vendors-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .filter-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Mandap<span>.com</span></h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="vendors.html" class="active">Vendors</a></li>
+                    <li><a href="packages.html">Packages</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="login.php" class="btn btn-outline">Login</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Vendors Hero Section -->
+    <section class="vendors-hero">
+        <div class="container">
+            <h1>Find the Perfect Wedding Vendors</h1>
+        </div>
+    </section>
+
+    <!-- Vendors Section -->
+    <section class="vendors-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Browse Our Trusted Vendors</h2>
+                <p>Discover the best wedding vendors across India</p>
+            </div>
+            
+            <div class="vendors-filters">
+                <form id="filter-form">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category">
+                                <option value="">All Categories</option>
+                                <option value="venues">Venues</option>
+                                <option value="catering">Catering</option>
+                                <option value="photography">Photography</option>
+                                <option value="makeup">Makeup</option>
+                                <option value="decoration">Decoration</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="location">Location</label>
+                            <select id="location" name="location">
+                                <option value="">All Locations</option>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="delhi">Delhi</option>
+                                <option value="bangalore">Bangalore</option>
+                                <option value="chennai">Chennai</option>
+                                <option value="hyderabad">Hyderabad</option>
+                                <option value="kolkata">Kolkata</option>
+                                <option value="Pune">Pune</option>
+                                <option value="Chh.Sambhaji nagar">Chh.Sambhaji nagar</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="price">Price Range</label>
+                            <select id="price" name="price">
+                                <option value="">All Prices</option>
+                                <option value="budget">Budget (₹)</option>
+                                <option value="moderate">Moderate (₹₹)</option>
+                                <option value="premium">Premium (₹₹₹)</option>
+                                <option value="luxury">Luxury (₹₹₹₹)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="rating">Minimum Rating</label>
+                            <select id="rating" name="rating">
+                                <option value="">Any Rating</option>
+                                <option value="5">5 Stars</option>
+                                <option value="4">4+ Stars</option>
+                                <option value="3">3+ Stars</option>
+                            </select>
+                        </div>
+                        <!-- <div class="filter-group">
+                            <label for="search">Search</label>
+                            <input type="text" id="search" name="search" placeholder="Search vendors...">
+                        </div> -->
+                    </div>
+                    <div class="filter-buttons">
+                        <button type="reset" class="btn btn-outline">Reset Filters</button>
+                        <button type="submit" class="btn btn-primary">Apply Filters</button>
+                    </div>
+                </form>
+            </div>
+            <div id="vendor-results" class="vendor-cards-container">
+    <!-- Filtered vendors will appear here -->
+</div>
+
+            <div class="vendors-grid">
+                <!-- Vendor 1 -->
+                <div class="vendor-card">
+                    <div class="vendor-image">
+                        <img src="https://images.unsplash.com/photo-1706750052065-c41dd68e433b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHJveWFsJTIwcGxhY2VzfGVufDB8fDB8fHww" alt="Royal Palace Banquets">
+                        <div class="vendor-category">Venue</div>
+                    </div>
+                    <div class="vendor-details">
+                        <h3 class="vendor-name">Royal Palace Banquets</h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <div class="count">(48 reviews)</div>
+                        </div>
+                        <div class="vendor-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Mumbai, Maharashtra</span>
+                        </div>
+                        <p class="vendor-description">Luxury banquet halls for weddings and receptions with capacity for up to 500 guests.</p>
+                        <div class="vendor-price">₹₹₹</div>
+                        <div class="vendor-actions">
+                            <a href="#" class="btn btn-outline">View Profile</a>
+                            <a href="contact.html" class="btn btn-primary">Contact</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vendor 2 -->
+                <div class="vendor-card">
+                    <div class="vendor-image">
+                        <img src="https://images.unsplash.com/photo-1580590562911-89d31480d993?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8U3BpY2UlMjBEZWxpZ2h0fGVufDB8fDB8fHww" alt="Spice Delight Caterers">
+                        <div class="vendor-category">Catering</div>
+                    </div>
+                    <div class="vendor-details">
+                        <h3 class="vendor-name">Spice Delight Caterers</h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="count">(36 reviews)</div>
+                        </div>
+                        <div class="vendor-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Delhi, NCR</span>
+                        </div>
+                        <p class="vendor-description">Multi-cuisine catering service specializing in traditional Indian wedding feasts.</p>
+                        <div class="vendor-price">₹₹</div>
+                        <div class="vendor-actions">
+                            <a href="#" class="btn btn-outline">View Profile</a>
+                            <a href="contact.html" class="btn btn-primary">Contact</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vendor 3 -->
+                <div class="vendor-card">
+                    <div class="vendor-image">
+                        <img src="https://images.unsplash.com/photo-1569810020669-aa9d38003ea7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHdlZGRpbmclMjBpbmRpYW58ZW58MHx8MHx8fDA%3D" alt="Moments Photography">
+                        <div class="vendor-category">Photography</div>
+                    </div>
+                    <div class="vendor-details">
+                        <h3 class="vendor-name">Moments Photography</h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <div class="count">(52 reviews)</div>
+                        </div>
+                        <div class="vendor-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Bangalore, Karnataka</span>
+                        </div>
+                        <p class="vendor-description">Award-winning wedding photography and videography services.</p>
+                        <div class="vendor-price">₹₹₹</div>
+                        <div class="vendor-actions">
+                            <a href="#" class="btn btn-outline">View Profile</a>
+                            <a href="contact.html" class="btn btn-primary">Contact</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vendor 4 -->
+                <div class="vendor-card">
+                    <div class="vendor-image">
+                        <img src="https://plus.unsplash.com/premium_photo-1724762184102-c61dab5edf9f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aW5kaWFuJTIwd2VkZGluZyUyMG1ha2V1cHxlbnwwfHwwfHx8MA%3D%3D" alt="Glamour Bridal Studio">
+                        <div class="vendor-category">Makeup</div>
+                    </div>
+                    <div class="vendor-details">
+                        <h3 class="vendor-name">Glamour Bridal Studio</h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <div class="count">(29 reviews)</div>
+                        </div>
+                        <div class="vendor-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Chennai, Tamil Nadu</span>
+                        </div>
+                        <p class="vendor-description">Professional bridal makeup and hair styling services for your special day.</p>
+                        <div class="vendor-price">₹₹</div>
+                        <div class="vendor-actions">
+                            <a href="#" class="btn btn-outline">View Profile</a>
+                            <a href="contact.html" class="btn btn-primary">Contact</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vendor 5 -->
+                <div class="vendor-card">
+                    <div class="vendor-image">
+                        <img src="https://images.unsplash.com/photo-1587271407850-8d438ca9fdf2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kaWFuJTIwd2VkZGluZyUyMGRlY29yYXRpb258ZW58MHx8MHx8fDA%3D" alt="Elegant Decor Solutions">
+                        <div class="vendor-category">Decoration</div>
+                    </div>
+                    <div class="vendor-details">
+                        <h3 class="vendor-name">Elegant Decor Solutions</h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <div class="count">(33 reviews)</div>
+                        </div>
+                        <div class="vendor-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Hyderabad, Telangana</span>
+                        </div>
+                        <p class="vendor-description">Creative wedding decoration services with customized themes and designs.</p>
+                        <div class="vendor-price">₹₹₹</div>
+                        <div class="vendor-actions">
+                            <a href="#" class="btn btn-outline">View Profile</a>
+                            <a href="contact.html" class="btn btn-primary">Contact</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vendor 6 -->
+                <div class="vendor-card">
+                    <div class="vendor-image">
+                        <img src="https://images.unsplash.com/photo-1578302758063-0ef3e048ca89?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Z2FyZGVufGVufDB8fDB8fHww" alt="Garden Paradise">
+                        <div class="vendor-category">Venue</div>
+                    </div>
+                    <div class="vendor-details">
+                        <h3 class="vendor-name">Garden Paradise</h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <div class="count">(41 reviews)</div>
+                        </div>
+                        <div class="vendor-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Pune, Maharashtra</span>
+                        </div>
+                        <p class="vendor-description">Beautiful outdoor garden venue perfect for daytime weddings and ceremonies.</p>
+                        <div class="vendor-price">₹₹</div>
+                        <div class="vendor-actions">
+                            <a href="#" class="btn btn-outline">View Profile</a>
+                            <a href="contact.html" class="btn btn-primary">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pagination">
+                <a href="#" class="pagination-item disabled">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <a href="#" class="pagination-item active">1</a>
+                <a href="#" class="pagination-item">2</a>
+                <a href="#" class="pagination-item">3</a>
+                <a href="#" class="pagination-item">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+            
+            <div class="vendor-cta">
+                <h2>Are You a Wedding Vendor?</h2>
+                <p>Join our platform to showcase your services to thousands of couples planning their wedding.</p>
+                <a href="signup.html" class="btn btn-primary">Register as Vendor</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Mandap<span>.com</span></h2>
+                    <p>Your complete wedding planning solution</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="vendors.html">Vendors</a></li>
+                            <li><a href="packages.html">Packages</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="services.html#venues">Venues</a></li>
+                            <li><a href="services.html#catering">Catering</a></li>
+                            <li><a href="services.html#photography">Photography</a></li>
+                            <li><a href="services.html#makeup">Makeup</a></li>
+                            <li><a href="services.html#decoration">Decoration</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Contact Us</h3>
+                        <ul class="contact-info">
+                            <li><i class="fas fa-map-marker-alt"></i> 123 Wedding Street, Mumbai</li>
+                            <li><i class="fas fa-phone"></i> +91 9876543210</li>
+                            <li><i class="fas fa-envelope"></i> info@QMandap.com</li>
+                        </ul>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Mandap.com. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <!-- Load jQuery first -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    // Apply filters using AJAX
+    $(document).ready(function () {
+        // Handle form submission
+        $('#filter-form').on('submit', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: 'fetch_vendors.php',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (response) {
+                    try {
+                        const vendors = JSON.parse(response);
+                        const container = $('#vendor-results');
+                        container.empty();
+
+                        if (vendors.length === 0) {
+                            container.append('<p>No vendors found matching your filters.</p>');
+                            return;
+                        }
+
+                        vendors.forEach(function (vendor) {
+                            container.append(`
+                                <div class="vendor-card">
+                                    <h3>${vendor.name}</h3>
+                                    <p><strong>Category:</strong> ${vendor.category}</p>
+                                    <p><strong>Location:</strong> ${vendor.location}</p>
+                                    <p><strong>Price:</strong> ${vendor.price_range}</p>
+                                    <p><strong>Rating:</strong> ${vendor.rating} ⭐</p>
+                                    <p><strong>contct:</strong> ${vendor.contact_phone}</p>
+                                    <p><strong>email:</strong> ${vendor.contact_email}</p>
+                                </div>
+                            `);
+                        });
+                    } catch (error) {
+                        alert("Error processing vendor data.");
+                        console.error(error);
+                    }
+                },
+                error: function () {
+                    alert('Something went wrong. Please try again.');
+                }
+            });
+        });
+
+        // Pre-fill category from URL param (optional)
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        if (category) {
+            $('#category').val(category);
+            $('#filter-form').submit(); // Auto-trigger filter
+        }
+    });
+</script>
+
+</body>
+</html>
